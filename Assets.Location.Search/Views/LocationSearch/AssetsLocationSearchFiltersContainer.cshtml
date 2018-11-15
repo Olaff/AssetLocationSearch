@@ -1,0 +1,21 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Assets.Location.Search.Extensions
+@model Coveo.UI.Mvc.Models.FacetModel
+
+
+<h4 class="see-more" data-toggle="collapse" data-target="#filter-panel" aria-expanded="false">@Html.Sitecore().Dictionary("location.search.filterexpandable","Filter")</h4>
+
+<div id="filter-panel" class="filter-panel collapse" aria-expanded="false">
+    @Html.Sitecore().Placeholder("visible-filters")
+    
+    <div id="apply-filters-section">
+        <button class="btn primary-btn" id="apply-filters" data-toggle="collapse" data-target="#filter-panel">
+            <span>@Html.Sitecore().Dictionary("location.search.viewresults", "View results")</span>
+        </button> 
+    </div>
+</div>
+
+<div style="display: none;">
+    @Html.Sitecore().Placeholder("hidden-facet")
+</div>

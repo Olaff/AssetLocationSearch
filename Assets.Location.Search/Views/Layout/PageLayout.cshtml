@@ -1,0 +1,25 @@
+﻿@using Sitecore.Mvc.Presentation
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assets Location Search </title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/css/Assets.Location.Search.css" />
+    <script type="text/javascript" src="~/Content/js/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/bootstrap/bootstrap.min.js"></script>
+    @Html.Sitecore().VisitorIdentification()
+</head>
+<body>
+    <div class="body-wrapper">
+        <main role="main">
+            @Html.Sitecore().Placeholder("page-layout")
+        </main>
+    </div>
+</body>
+</html>

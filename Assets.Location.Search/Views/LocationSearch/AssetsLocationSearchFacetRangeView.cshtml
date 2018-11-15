@@ -1,0 +1,35 @@
+﻿@using Coveo.UI.Extensions
+@model Coveo.UI.Mvc.Models.FacetRangeModel
+
+@Html.Coveo().RenderErrorSummary(Model.ValidateModel())
+
+@if (Model.IsConfigured)
+{
+   
+    <script type="text/javascript">
+        Coveo.$(function () {
+            var facetOptions = @Html.Raw(Model.GetJavaScriptInitializationOptions());
+            CoveoForSitecore.componentsOptions = Coveo.$.extend({}, CoveoForSitecore.componentsOptions, facetOptions);
+        });
+    </script>
+    <div id='@Model.Id'
+         class="CoveoFacetRange"
+         data-title='@Model.Title'
+         data-field='@Model.Field'
+         data-date-field='@Model.IsDateField'
+         data-number-of-values='100'
+         data-id='@Model.Id'
+         data-enable-collapse='@Model.EnableCollapse'
+         data-lookup-field='@Model.LookupField'
+         data-computed-field='@Model.ComputedField'
+         data-computed-field-operation='@Model.ComputedFieldOperation'
+         data-computed-field-format='@Model.ComputedFieldFormat'
+         data-computed-field-caption='@Model.ComputedFieldCaption'
+         data-include-in-breadcrumb='@Model.IncludeInBreadcrumb'
+         data-number-of-values-in-breadcrumb='@Model.NumberOfValuesInBreadcrumb'
+         data-enable-toggling-operator='@Model.EnableTogglingOperator'
+         data-use-and='@Model.UseAnd'
+         data-page-size='@Model.MorePageSize'
+         data-injection-depth='@Model.InjectionDepth'
+         data-available-sorts='@String.Join(",", Model.AvailableSorts)'></div>
+}

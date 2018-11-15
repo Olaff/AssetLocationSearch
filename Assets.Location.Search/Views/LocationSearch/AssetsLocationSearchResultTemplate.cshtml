@@ -1,0 +1,36 @@
+﻿@using Coveo.UI
+@using Sitecore.Mvc
+@using Assets.Location.Search.Extensions
+@model Assets.Location.Search.Models.CustomCoveoSearchModel
+
+
+<script class="result-template" type="text/underscore" data-condition='raw.@(Model.TemplateName.FieldName) == "Location Item"'>
+    <div class="component location-card" id="{{= raw['@Model.Name.FieldName'] }}">
+        <div class="row">
+            <% if (raw['distanceinmiles']) { %>
+                <div class="location-overlay">
+                    <span>{{= raw['distanceinmiles'] }}</span> @((Model.IsCanadianOrFrench()) ? Html.Sitecore().Dictionary("assets.locationsearch.km", "KM") : Html.Sitecore().Dictionary("assets.locationsearch.miles", "MILES"))
+                </div>
+             <% } %>
+        </div>
+        <h3>
+            <% if (raw['@Model.TemplateName.FieldName'] == "Location Item") { %>
+            <a class="CoveoResultLink" href="{{= clickUri}}">
+                {{= raw['@Model.Name.FieldName'] }}
+            </a>
+            <% } %>
+        </h3>
+        <p>{{= raw['@Model.Address.FieldName'] }}<br/>
+           {{= raw['@Model.City.FieldName'] }}, {{= raw['@Model.StateProvince.FieldName'] }} 
+           {{= raw['@Model.ZipCode.FieldName'] }}</p>
+        <div class="locator-information">
+            <i class="icon icon-telephone"></i>
+            <p>@Html.Sitecore().Dictionary("assets.locationsearch.callus", "CALL US ANYTIME")</p>
+            <div class="telephone">
+                <a  href="tel:{{= raw['@Model.PhoneNumber.FieldName'] }}">
+                    {{= raw['@Model.PhoneNumber.FieldName'] }}
+                </a>
+            </div>
+        </div>
+    </div>
+</script>

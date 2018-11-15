@@ -1,0 +1,55 @@
+﻿@using Sitecore.Mvc;
+@using Assets.Location.Search.Extensions
+@model Assets.Location.Search.Models.GeocodeResponse
+
+
+
+    <div class="col-md-12">
+        <h3 class="text-center mb-5"> Location Preview</h3>
+        <ul class="list-group">
+            <li class="list-group-item">Country: @Model.CountryName</li>
+            <li class="list-group-item">State: @Model.RegionName</li>
+            <li class="list-group-item">City: @Model.City</li>
+            <li class="list-group-item">Postal Code: @Model.ZipCode </li>
+            <li class="list-group-item">Latitude: @Model.Latitude</li>
+            <li class="list-group-item">Longitude: @Model.Longitude</li>
+        </ul>
+        <span class="lead"> How many locations with this data do you want to create?</span>
+        <form id="create-locations-form" action="@Url.Action("CreateLocations", "LocationSearch")">
+            <div class="form-group">
+                <input class="form-control-sm" type="number" id="locations-number-btn" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success float-right" name="submit-button"> Submit </button>
+            </div>
+        </form>
+        <p class="text-info" id="info-message"></p>
+    </div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $form = $("#create-locations-form");
+
+        $form.submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: JSON.stringify({
+                    quantity: $("#locations-number-btn").val(),
+                }),
+                dataType: 'json',
+                contentType: "application/json, charset=utf-8"
+
+            }).done(function (data) {
+                if (data.Success) {
+                    $("#info-message").html(data.Message)
+                }
+            })
+        });
+    })
+</script>

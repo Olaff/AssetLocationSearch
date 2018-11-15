@@ -1,0 +1,214 @@
+﻿@using Coveo.UI
+@using Coveo.UI.Extensions
+@using Sitecore.Mvc
+@using Assets.Location.Search.Extensions
+@model Assets.Location.Search.Models.CustomCoveoSearchModel
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Model.GoogleMapsApiKey&language=@Model.CurrentLanguage&region=@Model.CurrentLanguageRegion" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.Utils.js"></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.Init.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.Coveo.Base.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.Base.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.GeoModule.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.Map.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.StateMachine.js" defer></script>
+<script type="text/javascript" src="~/Content/js/Assets.Location.Search.js" defer></script>
+
+
+<div class="location-search" itemscope itemtype="http://schema.org/SearchResultsPage">
+    @Html.Coveo().RenderErrorSummary(Model.ValidateModel())
+    @if ( Model.IsConfigured )
+    {
+        <script type="text/javascript" src="/Coveo/js/cultures/@(Model.CultureName).js"></script>
+
+        <script type="text/javascript">
+            Coveo.$(function() {
+                CoveoForSitecore.componentsOptions = @(Html.Raw(Model.GetJavaScriptInitializationOptions()));
+
+                String["toLocaleString"]({
+                    "@Model.CultureName": {
+                        "ShowingResultsOf": "@Html.Raw(Html.Sitecore().Dictionary("assets.locationsearch.resultcount", "Showing {1} location<pl>s</pl> of {2}"))",
+                        "Search": "@Html.Sitecore().Dictionary("obituaries.obituarysearch.searchbutton", "Search")"
+                    }
+                });
+            });
+        </script>
+
+
+        @* This hidden input is required to bypass a problem with the Enter key causing a form submission
+            if the form has exactly one text field, or only when there is a submit button present. *@
+        <input type="text" class="fix-submit" />
+
+        <div id="@Model.Id"
+             class="CoveoSearchInterface @(Model.DisplayRecommendations ? "coveo-recommendations" : "")"
+             data-enable-history="true"
+             data-results-per-page="@Model.ResultsPerPage"
+             data-excerpt-length="@Model.ExcerptLength"
+             data-hide-until-first-query="@Model.HideUntilFirstQuery"
+             data-auto-trigger-query="@Model.AutoTriggerQuery"
+             data-design="new"
+             data-loading-animation="false"
+             @if ( Model.IsMaximumAgeSet ) { @: data-maximum-age="@Model.MaximumAge"
+                                           }
+             @if ( Model.UseCustomQueryPipeline ) { @: data-pipeline="@Model.QueryPipelineName"
+                                           }>
+
+            @if ( Model.AnalyticsEnabled )
+            {
+                <div class="CoveoAnalytics"
+                     data-anonymous="@Model.IsUserAnonymous"
+                     data-endpoint="@Model.GetAnalyticsEndpoint()"
+                     data-search-hub="@Model.GetAnalyticsCurrentPageName()"
+                     data-send-to-cloud="@Model.CoveoAnalyticsEnabled">
+                </div>
+            }
+            <div class="row row-band">
+                <div class="col-sm-12">
+                    <form class="component search-box search-box-with-clear" action="#">
+                        <label for="q">@Html.Sitecore().Dictionary("assets.locationsearch.searchboxlabel", "Search")</label>
+                        <div class="CoveoSearchbox CoveoSearchPageSearchbox form-group"
+                             data-auto-focus="false"
+                             data-enable-lowercase-operators="@Model.EnableLowercaseOperators"
+                             data-enable-partial-match="@Model.EnablePartialMatch"
+                             data-partial-match-keywords="@Model.PartialMatchKeywords"
+                             data-partial-match-threshold="@Model.PartialMatchThreshold"
+                             data-enable-question-marks="@Model.EnableQuestionMarks"
+                             data-enable-wildcards="@Model.EnableWildcards"
+                             @if ( Model.EnableOmnibox ) { 
+                                 @: data-enable-omnibox="true"
+                                 @: data-omnibox-timeout="@Model.OmniboxTimeout"
+                                 @: data-enable-field-addon="@Model.OmniboxEnableFieldAddon"
+                                 @: data-enable-simple-field-addon="@Model.OmniboxEnableSimpleFieldAddon"
+                                 @: data-enable-top-query-addon="@Model.OmniboxEnableTopQueryAddon"
+                                 @: data-enable-reveal-query-suggest-addon="@Model.OmniboxEnableMLQuerySuggestAddon"
+                                 @: data-enable-query-extension-addon="@Model.OmniboxEnableQueryExtensionAddon"
+                                                                                                                                                 }>
+                        </div>
+                        <span class="CoveoFieldSuggestions" data-field='@(Model.ToCoveoFieldName("dynamicLocationName"))'></span>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <div class="row row-band" id="searchResultsSection">
+                <p class="custom-results-message-global search-text" style="display: none;">@Html.Sitecore().Dictionary("assets.locationsearch.globalfuneralhomeresults", "You're seeing results from") <b class="global-search-text"></b></p>
+
+                <p class="CoveoDidYouMean" data-enable-auto-correction="@Model.EnableDidYouMeanAutoCorrection"></p>
+
+                @if ( Model.DisplayErrorReport )
+                {
+                    <div class="CoveoErrorReport c"></div>
+                }
+            </div>
+
+            <div class="row row-band location-search-filter">
+                <div class="coveo-summary-section">
+                    @if ( Model.DisplayQuerySummary )
+                    {
+                        <span class="CoveoQuerySummary"
+                              data-enable-search-tips="@Model.QuerySummaryEnableSearchTips"
+                              data-only-display-search-tips="@Model.QuerySummaryOnlyDisplaySearchTips"></span>
+                    }
+                    <div class="custom-no-results-message-global" style="display: none;">
+                        <h2>@Html.Sitecore().Dictionary("assets.locationsearch.noresults", "We're sorry, but we didn't find any locations matching your search criteria.")</h2>
+                        <p>@Html.Sitecore().Dictionary("assets.locationsearch.thingstotry", "Here are some things you can try:")</p>
+                        <ul>
+                            <li>@Html.Sitecore().Dictionary("assets.locationsearch.checkspelling", "Check your spelling and search again.")</li>
+                            <li>@Html.Sitecore().Dictionary("assets.locationsearch.searchbycity", "Search by city, state or zip code.")</li>
+                            <li>@Html.Sitecore().Dictionary("assets.locationsearch.searchbyname", "Search for a specific funeral home, cemetery or cremation provider by name.")</li>
+                        </ul>
+
+                        <p>@Html.Sitecore().Dictionary("search.phone", "You can also get in touch")</p>
+
+                    </div>
+
+                    <div class="coveo-distance-resources-section">
+                        @Html.Sitecore().Placeholder("coveo-distance-resources-mvc")
+                    </div>
+
+                    <div class="CoveoHiddenQuery"></div>
+                </div>
+                <div id="filterResults">@Html.Sitecore().Placeholder("location-search-facets")</div>
+
+                @if ( Model.DisplaySorting )
+                {
+                    <div class="coveo-sort-section">
+                        @Html.Sitecore().Placeholder("coveo-sorts-mvc")
+                    </div>
+                }
+            </div>
+
+            @if ( Model.DisplayResultList )
+            {
+                <div class="row row-band location-search-map">
+                    <div class="col-sm-4">
+                        <div id="results-sidebar" class="CoveoResultList" data-wait-animation="fade" data-result-container-selector="#sidebar">
+                            @Html.Partial("~/Views/LocationSearch/AssetsLocationSearchResultTemplate.cshtml", Model)
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.Partial("~/Views/LocationSearch/AssetsLocationSearchMap.cshtml")
+                    </div>
+                </div>
+                <div class="row row-band">
+                    <div class="col-sm-5 col-md-4">
+                        <div class="component search-footer">
+                            <a role="button" style="display:none" id="see-more-btn" class="btn btn-outline-primary"><span>@Html.Sitecore().Dictionary("assets.locationsearch.seemore", "See More")</span></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+
+    @if ( Model.HasErrors )
+    {
+        <div class="CoveoServerError">
+            <h2>@Model.Labels[LocalizedStringKeys.FRIENDLY_SEARCH_UNAVAILABLE_TITLE]</h2>
+            <p>@Model.Labels[LocalizedStringKeys.FRIENDLY_SEARCH_UNAVAILABLE_DETAIL]</p>
+        </div>
+
+        if ( Html.Coveo().IsEditingInPageEditor() )
+        {
+            <script type="text/javascript">
+                Coveo.$(function() {
+                    Coveo.PageEditorDeferRefresh.triggerUpdate();
+                });
+            </script>
+        }
+    }
+    <script>
+        var coveoFields = {
+            modelID: '#@Model.Id',
+            Lat: '@Model.Latitude.PrefixedName',
+            Long: '@Model.Longitude.PrefixedName',
+            LatFieldName: "@Model.Latitude.FieldName",
+            LongFieldName: "@Model.Longitude.FieldName",
+            Name: "@Model.Name.FieldName",
+            Code: "@Model.Code.FieldName",
+            Address: '@Model.Address.FieldName',
+            PhoneNumber: '@Model.PhoneNumber.FieldName',
+            Placeholder: '@HttpUtility.JavaScriptStringEncode(Html.Sitecore().Dictionary("location.custom.searchboxplaceholder", "Enter location name, city, state, province or postal code"))',
+            Clear: '@Html.Sitecore().Dictionary("assets.locationsearch.clearbutton", "Clear")',
+        };
+
+        var contextFields = {
+            currentUrl: '@Model.CurrentItemUrl',
+            currentItemName : '@Model.CurrentItemName',
+            geoIPLatitude : '@Model.CurrentUserLocation.Latitude',
+            geoIPLongitude : '@Model.CurrentUserLocation.Longitude',
+            geoIPCity: '@Model.CurrentUserLocation.City',
+            geoIPState: '@Model.CurrentUserLocation.State',
+            geoIPSCitytate:'',
+            IsGeoIpDefault: @Model.CurrentUserLocation.IsDefault.ToString().ToLowerInvariant(),
+            CurrentLanguage : '@Model.CurrentLanguageRegion',
+            SkipGoogleValues: '@Model.SkipGoogleValues',
+            DistanceUnit: '@Model.DistanceUnit'
+        };
+    </script>
+
+
+

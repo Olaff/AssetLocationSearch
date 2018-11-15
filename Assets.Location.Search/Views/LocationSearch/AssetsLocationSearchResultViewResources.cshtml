@@ -1,0 +1,20 @@
+﻿@using Coveo.UI.Extensions
+
+<link rel="stylesheet" href="/Coveo/css/CoveoFullSearchNewDesign.css" />
+<link rel="stylesheet" href="/Coveo/css/CoveoComponent.css" />
+
+<script type="text/javascript" src="/Coveo/js/CoveoJsSearch.WithDependencies.min.js"></script>
+@if (Html.Coveo().IsInSitecore80ExperienceEditor())
+{
+    <script>
+        jQuery.noConflict();
+    </script>
+}
+<script type="text/javascript" src="/Coveo/js/CoveoForSitecorePolyfills.js"></script>
+<script type="text/javascript" src="/Coveo/js/CoveoForSitecore.min.js"></script>
+
+@if (Html.Coveo().IsEditingInPageEditor())
+{
+    <script type="text/javascript" src="/Coveo/js/PageEditorDeferRefresh.js"></script>
+    <div>Coveo Search Resources</div>
+}

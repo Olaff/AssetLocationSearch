@@ -1,0 +1,552 @@
+﻿html, body {
+    height: 100%;
+}
+
+.body-wrapper {
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
+}
+
+.row-band {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .row-band [class*='col-'] {
+        padding: 0;
+    }
+
+    .row-band .component {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+.CoveoSearchInterface #filterResults + .coveo-summary-section {
+    padding-left: 0 !important;
+}
+
+.filter-panel .coveo-facet-header-settings, .filter-panel .coveo-facet-header-eraser.coveo-facet-header-eraser-visible {
+    display: none;
+}
+
+.filter-panel {
+    border: 1px solid #aeaca9;
+    padding: 20px;
+    background: #fff;
+    position: absolute;
+    z-index: 300;
+    width: 100%;
+    font-family: "Lato", Arial, Helvetica, Lucida Grande, Sans-serif;
+}
+
+    .filter-panel .CoveoFacet, .filter-panel .CoveoFacetRange, .filter-panel .CoveoFacetSlider, .filter-panel .CoveoHierarchicalFacet {
+        margin: 0;
+        border: none;
+    }
+
+    .filter-panel .coveo-facet-value:hover .coveo-facet-value-checkbox > span, .filter-panel .coveo-facet-value.coveo-selected .coveo-facet-value-checkbox > span, .filter-panel .coveo-facet-value:not(.coveo-facet-search-button) .coveo-facet-value-checkbox:focus > span {
+        background-position: 0 0;
+    }
+
+    .filter-panel .coveo-facet-footer, .filter-panel .coveo-facet-more, .filter-panel .coveo-facet-less, .filter-panel .coveo-facet-value:hover, .filter-panel .coveo-facet-value.coveo-focused,
+    .filter-panel .coveo-facet-more:hover, .filter-panel .coveo-facet-more:focus, .filter-panel .coveo-facet-less:hover, .filter-panel .coveo-facet-less:focus {
+        background-color: transparent;
+    }
+
+    .filter-panel .coveo-facet-header {
+        text-transform: uppercase;
+        letter-spacing: 2.4px;
+        background-color: transparent;
+        margin-bottom: 10px;
+        padding: 0;
+    }
+
+        .filter-panel .coveo-facet-header .coveo-facet-header-title {
+            font-size: 16px;
+            color: #605f5e;
+        }
+
+    .filter-panel .coveo-facet-values {
+        list-style: none;
+        padding: 0;
+    }
+
+        .filter-panel .coveo-facet-values .coveo-facet-value {
+            padding: 0;
+        }
+
+        .filter-panel .coveo-facet-values .coveo-facet-value-label {
+            margin-bottom: 15px;
+        }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-label .coveo-facet-value-label-wrapper {
+                display: -webkit-box;
+                /* OLD - iOS 6-, Safari 3.1-6 */
+                display: -moz-box;
+                /* OLD - Firefox 19- (buggy but mostly works) */
+                display: -ms-flexbox;
+                /* TWEENER - IE 10 */
+                display: -webkit-flex;
+                /* NEW - Chrome */
+                display: flex;
+            }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-label .coveo-facet-value-checkbox {
+                background-color: #fff;
+                border: 1px solid #aeaca9;
+                cursor: pointer;
+                content: "";
+                display: inline-block;
+                height: 20px;
+                vertical-align: sub;
+                width: 20px;
+                -moz-box-flex: 0 0;
+                -webkit-flex: none;
+                -ms-flex: none;
+                flex: none;
+                -webkit-border-radius: 0;
+                border-radius: 0;
+                -moz-background-clip: padding-box;
+                -webkit-background-clip: padding-box;
+                background-clip: padding-box;
+            }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-label input[type="checkbox"]:checked + .coveo-facet-value-checkbox {
+                background-position: -237px -239px;
+                width: 20px;
+                height: 20px;
+                border: 1px solid #000000;
+                background-color: #808080;
+            }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-label .coveo-facet-value-caption {
+                text-transform: none;
+                padding: 0;
+                color: #605f5e;
+                font-size: 14px;
+                letter-spacing: 2.4px;
+                font-weight: normal;
+                -moz-box-flex: 0 1;
+                -webkit-flex: 0 1 auto;
+                -ms-flex: 0 1 auto;
+                flex: 0 1 auto;
+            }
+
+        .filter-panel .coveo-facet-values .coveo-facet-value-count {
+            font-weight: normal;
+            color: #605f5e;
+            -webkit-align-self: flex-end;
+            -ms-align-self: flex-end;
+            align-self: flex-end;
+            -moz-box-flex: 1 0;
+            -webkit-flex: auto;
+            -ms-flex: auto;
+            flex: auto;
+            -webkit-order: 3;
+            -ms-order: 3;
+            order: 3;
+        }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-count:before {
+                content: '(';
+            }
+
+            .filter-panel .coveo-facet-values .coveo-facet-value-count:after {
+                content: ')';
+            }
+
+.location-search .filter-panel #apply-filters-section {
+    width: 100%;
+}
+
+.location-search .filter-panel #apply-filters {
+    float: right;
+    margin: 20px;
+}
+
+
+
+
+.location-card {
+    padding-top: 20px;
+    padding-bottom: 0;
+    background: #f2f0ec;
+    width: 100%;
+}
+
+    .location-card img {
+        width: 100%;
+    }
+
+    .location-card p {
+        letter-spacing: 1.5px;
+    }
+
+    .location-card h3 {
+        font-size: 30px;
+    }
+
+    .location-card .row {
+        margin: auto;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+        .location-card .row .location-overlay {
+            height: 30px;
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+            text-align: right;
+            padding-right: 15px;
+            background: #605f5e;
+            opacity: .8;
+            color: white;
+            font-family: "Lato", Arial, Helvetica, Lucida Grande, Sans-serif;
+            text-transform: uppercase;
+            font-size: .7em;
+        }
+
+            .location-card .row .location-overlay span {
+                font-family: "MrsEaves-Italic", Georgia, Times New Roman, serif;
+                display: block;
+                display: inline-block;
+                font-size: 1.5em;
+                padding-right: 2px;
+            }
+
+    .location-card .locator-information p {
+        padding-top: 5px;
+        font-size: .8em;
+    }
+
+    .location-card .locator-information .icon-telephone {
+        float: left;
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+#searchResultsSection {
+    margin-top: 30px;
+    font-family: Lato, Arial, Helvetica, Lucida Grande, Sans-serif;
+}
+
+    #searchResultsSection .row > div {
+        margin-top: 10px;
+    }
+
+#see-more-container {
+    display: none;
+}
+
+.hide-extra-paragraphs .see-more {
+    text-align: left;
+    display: inline;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+
+@media (min-width: 768px) {
+    .row-band {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .row-band {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+
+
+
+.location-search #results-sidebar {
+    scrollbar-face-color: #605f5e;
+    scrollbar-shadow-color: #605f5e;
+    scrollbar-highlight-color: #eeebe6;
+    scrollbar-3dlight-color: #eeebe6;
+    scrollbar-darkshadow-color: #605f5e;
+    scrollbar-track-color: #eeebe6;
+    scrollbar-arrow-color: #605f5e;
+}
+
+#location-search-map {
+    margin: 0;
+    padding: 0;
+    height: 50%;
+}
+
+.location-search .location-search-map {
+    position: relative;
+}
+
+    .location-search .location-search-map .CoveoResultList {
+        margin: 0;
+    }
+
+.location-search #location-search-map {
+    height: 100%;
+    width: 100%;
+}
+
+.location-search #sticky-map {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;
+    top: 0;
+    height: 300px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+
+.location-search .search-footer {
+    margin-top: 30px;
+}
+
+.search-footer {
+    text-align: center;
+}
+
+    .search-footer > button {
+        display: inline-block;
+        margin-bottom: 25px;
+        margin-bottom: 1.5625rem;
+        width: 100%;
+    }
+
+.location-search .location-search-filter {
+    padding-bottom: 5px;
+    position: relative;
+}
+
+    .location-search .location-search-filter .CoveoQuerySummary {
+        text-transform: uppercase;
+        letter-spacing: 2.4px;
+        font-family: Lato, Arial, Helvetica, Lucida Grande, Sans-serif;
+        color: #4a3c31;
+    }
+
+    .location-search .location-search-filter .see-more {
+        text-align: right;
+    }
+
+    .location-search .location-search-filter .filter-panel {
+        width: 95%;
+        max-width: 1400px;
+        right: 20px;
+        margin-left: 20px;
+        padding: 0;
+    }
+
+        .location-search .location-search-filter .filter-panel > div {
+            padding-left: 20px;
+        }
+
+            .location-search .location-search-filter .filter-panel > div:first-child {
+                margin-top: 20px;
+            }
+
+#map-instructions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    background: #fff;
+    z-index: 2;
+    font-size: 12px;
+    font-family: Lato-Bold, Arial, Helvetica, Lucida Grande, Sans-serif;
+}
+
+.see-more {
+    text-transform: uppercase;
+    letter-spacing: 2.4px;
+    font-family: "Lato-bold", Arial, Helvetica, Lucida Grande, Sans-serif;
+    display: block;
+    font-size: 14px;
+    color: #4a3c31;
+    cursor: pointer;
+}
+
+    .see-more:after {
+        content: '';
+        margin-left: 8px;
+        background-position: -427px -138px;
+        width: 17px;
+        height: 10px;
+        display: inline-block;
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        -webkit-transition: all 0.12s 0.35s ease;
+        -moz-transition: all 0.12s 0.35s ease;
+        -ms-transition: all 0.12s 0.35s ease;
+        -o-transition: all 0.12s 0.35s ease;
+        transition: all 0.12s 0.35s ease;
+    }
+
+    .see-more[aria-expanded="false"]:after {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    .see-more .more {
+        display: none;
+    }
+
+    .see-more[aria-expanded="false"] .more {
+        display: inline;
+    }
+
+    .see-more[aria-expanded="false"] .less {
+        display: none;
+    }
+
+@media (min-width: 768px) {
+    .location-search #sticky-map {
+        position: relative;
+        z-index: 0;
+        overflow: visible;
+        height: 700px;
+    }
+
+    .location-search .location-search-filter .see-more {
+        margin-bottom: -20px;
+    }
+
+    .location-search #results-sidebar {
+        height: 700px;
+        overflow-y: auto;
+        background: #f2f0ec;
+    }
+
+    .search-footer > button {
+        width: auto;
+    }
+
+    .location-search .filter-panel {
+        margin-top: 20px;
+    }
+
+        .location-search .filter-panel > div {
+            vertical-align: top;
+            width: 48%;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+            .location-search .filter-panel > div:nth-child(odd) {
+                margin-right: 20px;
+            }
+
+        .location-search .filter-panel .coveo-facet-values .coveo-facet-value-exclude {
+            right: 20px;
+        }
+}
+
+@media (min-width: 992px) {
+    .location-search .location-search-filter .filter-panel {
+        right: 30px;
+        margin-top: 25px;
+    }
+}
+
+@media (min-width: 480px) {
+    .CoveoSearchInterface .checkboxes .filter-panel > div {
+        vertical-align: top;
+        width: 48%;
+        display: inline-block;
+    }
+
+        .CoveoSearchInterface .checkboxes .filter-panel > div:nth-child(odd) {
+            margin-right: 20px;
+        }
+}
+
+@media (min-width: 992px) {
+    .CoveoSearchInterface .checkboxes .filter-panel > div {
+        width: auto;
+        display: block;
+    }
+
+        .CoveoSearchInterface .checkboxes .filter-panel > div:nth-child(odd) {
+            margin-right: 0;
+        }
+}
+
+@media (min-width: 992px) {
+    #filterResults:not([style*="display: none"]) + div {
+        padding-left: 40px;
+    }
+
+    .checkboxes .filter-panel {
+        border-top: none;
+        position: static;
+        display: block !important;
+        height: auto !important;
+    }
+
+    fieldset .form-group {
+        width: 100%;
+    }
+
+    .checkboxes .filter-panel {
+        border-top: none;
+        position: static;
+        display: block !important;
+        height: auto !important;
+    }
+
+    .checkboxes, .radio-buttons {
+        margin-top: 0;
+    }
+
+        .checkboxes:not(.form-inline), .radio-buttons:not(.form-inline) {
+            padding-top: 0;
+        }
+
+        .checkboxes h4.see-more, .radio-buttons h4.see-more {
+            background-color: #eeebe6;
+            padding: 10px 20px;
+            margin: 0;
+            position: static;
+            border: 1px solid #aeaca9;
+            border-bottom: none;
+            font-size: 18px;
+            cursor: default;
+        }
+
+            .checkboxes h4.see-more:after, .radio-buttons h4.see-more:after {
+                display: none;
+            }
+}
+
+@media (min-width: 1300px) {
+    .location-search .filter-panel > div {
+        width: 23%;
+    }
+
+        .location-search .filter-panel > div:nth-child(3n) {
+            margin-right: 20px;
+        }
+
+        .location-search .filter-panel > div:nth-child(4n) {
+            margin-right: 0;
+        }
+}

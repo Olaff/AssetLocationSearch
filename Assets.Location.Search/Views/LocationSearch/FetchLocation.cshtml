@@ -1,0 +1,40 @@
+﻿@using Sitecore.Mvc;
+@using Assets.Location.Search.Extensions
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="text-center mb-5"> Location Creation Page</h3>
+        <form class="form" id="fetch-locations-form" action="@Url.Action("FetchLocation", "LocationSearch")">
+            <div class="form-group">
+                <label for="address-input"> IP Address </label>
+                <input class="form-control" name="address-input" id="address-input" type="text" placeholder="Enter a IP Address" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success float-right" name="submit-button"> Submit </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row" id="fetched-location-result"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $form = $("#fetch-locations-form");
+
+        $form.submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: JSON.stringify({ ipAddress: $("#address-input").val() }),
+                contentType: "application/json, charset=utf-8"
+
+            }).done(function (data) {
+                $("#fetched-location-result").html(data);
+            })
+        });
+    })
+</script>

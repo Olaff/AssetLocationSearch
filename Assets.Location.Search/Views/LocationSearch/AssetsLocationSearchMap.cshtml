@@ -1,0 +1,11 @@
+﻿@using Sitecore.Analytics
+@using Sitecore.Mvc
+@using Assets.Location.Search.Helpers
+@using Assets.Location.Search.Extensions
+@{
+    var currentLocation = GeoIpHelper.GetCurrentLocation();
+}
+<div id="sticky-map">
+    <div id="map-instructions">@Html.Sitecore().Dictionary("assets.locationsearch.mapinstructions", "Move map to see new results")</div>
+    <div id="location-search-map" data-latitude="@currentLocation.Latitude" data-longitude="@currentLocation.Longitude"></div>
+</div>
